@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="dark" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Valentine's Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root { --primary: #f20d46; --gold: #D4AF37; }
+body { font-family: "Be Vietnam Pro", sans-serif; scroll-behavior: smooth; background: #1a0508; color: #fff; overflow-x: hidden; }
+.heart-svg { filter: drop-shadow(0 0 30px rgba(242,13,70,0.6)); animation: heartbeat 1.5s ease-in-out infinite; }
+@keyframes heartbeat { 0%, 100% { transform: scale(1); } 10%, 30% { transform: scale(1.1); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+@keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+.floating { animation: float 3s ease-in-out infinite; }
+.animate-on-scroll { opacity: 0; transition: all 0.6s; }
+.animate-on-scroll.animated { opacity: 1; }
+.full-screen-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); animation: kenBurns 20s ease-in-out infinite alternate; }
+
+/* Zarf stilleri */
+.envelope-container { perspective: 1000px; }
+.envelope { position: relative; width: 320px; height: 220px; background: #d62828; border-radius: 0 0 5px 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+.envelope:before { content: ""; position: absolute; top: 0; left: 0; border-left: 160px solid transparent; border-right: 160px solid transparent; border-top: 110px solid #c1121f; transform-origin: top; transition: transform 0.6s; z-index: 5; }
+.envelope-container:hover .envelope:before { transform: rotateX(180deg); z-index: 1; }
+.card-inside { position: absolute; top: 10px; left: 15px; width: 290px; height: 190px; background: white; color: #333; padding: 20px; text-align: center; transition: transform 0.6s, opacity 0.6s; z-index: 2; display: flex; align-items: center; justify-content: center; opacity: 0; }
+.envelope-container:hover .card-inside { transform: translateY(-110px); z-index: 3; opacity: 1; }
+/* Mobil için otomatik açık durum */
+.envelope-container.mobile-opened .envelope:before { transform: rotateX(180deg); z-index: 1; }
+.envelope-container.mobile-opened .card-inside { transform: translateY(-110px); z-index: 3; opacity: 1; }
+
+/* Popup */
+#musicPopup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 10000; }
+</style>
+</head>
+<body>
+<audio id="audio" loop preload="auto"><source src="perfect.mp3" type="audio/mpeg"></audio>
+
+<!-- Müzik Başlatma Popup -->
+<div id="musicPopup">
+<div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center shadow-2xl">
+<span class="material-symbols-outlined text-[var(--primary)] text-6xl mb-4 floating" style="font-variation-settings: 'FILL' 1;">music_note</span>
+<h2 class="text-3xl font-bold text-gray-800 mb-4">Müziği Başlat</h2>
+<p class="text-gray-600 mb-6 text-lg">Deneyiminizi daha özel kılmak için müziği başlatmak ister misiniz?</p>
+<div class="flex gap-4 justify-center">
+<button onclick="startMusicFromPopup()" class="bg-[var(--primary)] hover:bg-red-600 text-white px-10 py-4 rounded-lg font-bold text-lg transition shadow-lg">
+✨ Evet, Başlat
+</button>
+<button onclick="closePopup()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-10 py-4 rounded-lg font-bold text-lg transition">
+Hayır
+</button>
+</div>
+</div>
+</div>
+
+<section class="relative h-screen flex flex-col items-center justify-center overflow-hidden">
+<img src="SS.jpeg" class="full-screen-photo"/>
+<div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#1a0508]/90"></div>
+<div class="relative z-10 text-center px-4">
+<h1 class="font-serif text-6xl md:text-8xl lg:text-9xl text-white mb-6 tracking-tighter drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
+Happy<br/><span class="text-[var(--primary)] italic">Valentine's Day</span>
+</h1>
+<div class="w-32 h-32 mx-auto floating">
+<span class="material-symbols-outlined text-[var(--primary)] drop-shadow-[0_0_35px_rgba(242,13,70,0.8)] text-[100px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<p class="mt-12 text-white text-sm uppercase tracking-[0.5em] animate-pulse">Hikayemiz İçin Aşağıya Kaydırabilirsin</p>
+</div>
+</section>
+
+<section class="py-0 min-h-screen bg-[#1a0508] relative flex items-center justify-center">
+<div class="max-w-6xl mx-auto px-4">
+<div class="flex flex-col lg:flex-row items-center gap-0 bg-[#231015] shadow-2xl animate-on-scroll">
+<div class="w-full lg:w-3/5 h-[500px] lg:h-[800px] relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-110" style="background-image: url('aa.jpeg');"></div>
+</div>
+<div class="w-full lg:w-2/5 p-12 lg:p-20 text-center lg:text-left">
+<span class="material-symbols-outlined text-[var(--gold)] text-6xl mb-8 floating">format_quote</span>
+<h2 class="font-serif text-4xl md:text-6xl text-[var(--gold)] leading-tight mb-8">"Seninle her gün bir ömre bedel"</h2>
+<div class="h-1 w-24 bg-[var(--gold)] mx-auto lg:mx-0 mb-8"></div>
+<p class="text-white/90 text-xl italic leading-relaxed">Hayatımdaki en güzel anların mimarı, gülüşümün sebebi. Seninle geçen her saniye, kalbime yazılmış en güzel şiir gibi.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-32 bg-gradient-to-br from-[#1a0508] to-[#0a0203] relative overflow-hidden">
+<div class="max-w-6xl mx-auto px-4 text-center">
+<h2 class="font-serif text-5xl md:text-6xl text-white mb-6 animate-on-scroll">Senin İçin Küçük Notlar</h2>
+<p class="text-[var(--primary)] text-lg mb-20 font-light tracking-widest uppercase animate-on-scroll">Bir sürpriz seni bekliyor</p>
+<div class="flex justify-center items-center animate-on-scroll">
+<div class="envelope-container cursor-pointer">
+<div class="envelope mx-auto"></div>
+<div class="card-inside">
+<div class="flex flex-col items-center gap-4">
+<span class="material-symbols-outlined text-[var(--primary)] text-4xl" style="animation: heartbeat 1.5s ease-in-out infinite;">favorite</span>
+<p class="text-sm font-display text-gray-500 uppercase tracking-widest">Seni Seviyorum</p>
+<h3 class="text-2xl font-serif text-black font-bold">Her Şeyimsin</h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-32 bg-[#050203] text-center">
+<div class="max-w-4xl mx-auto px-4">
+<h2 class="font-serif text-4xl md:text-6xl text-[var(--gold)] mb-4 animate-on-scroll">Birlikte Geçen Günlerimiz</h2>
+<p class="text-sm text-gray-400 mb-16 uppercase tracking-[0.5em] animate-on-scroll">Sonsuzluğa Doğru</p>
+<div class="relative w-80 h-80 md:w-96 md:h-96 mx-auto mb-16 animate-on-scroll">
+<svg class="heart-svg w-full h-full" viewBox="0 0 100 100">
+<path d="M50,90 C50,90 10,65 10,40 C10,25 20,15 30,15 C40,15 45,20 50,30 C55,20 60,15 70,15 C80,15 90,25 90,40 C90,65 50,90 50,90 Z" 
+fill="#ff6b9d" stroke="#ff1744" stroke-width="2"/>
+</svg>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+<span class="block text-5xl md:text-7xl font-bold font-serif text-white tracking-tighter drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]" id="dayCounter">2555</span>
+<span class="block text-white text-sm md:text-base font-medium uppercase tracking-[0.2em] mt-2 drop-shadow-[0_0_10px_rgba(0,0,0,0.9)]">Gündür</span>
+<span class="block text-white text-xs md:text-sm font-medium uppercase tracking-[0.2em] drop-shadow-[0_0_10px_rgba(0,0,0,0.9)]">Kalbimiz Birlikte Atıyor</span>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-32 bg-black">
+<div class="max-w-5xl mx-auto px-6">
+<h2 class="font-serif text-4xl text-center mb-20 uppercase tracking-widest animate-on-scroll">Bizim Şarkımız</h2>
+<div class="flex flex-col lg:flex-row items-center gap-16">
+<div class="w-full lg:w-1/2 animate-on-scroll">
+<div class="relative rounded-lg overflow-hidden shadow-2xl">
+<img src="11.jpeg" class="w-full aspect-square object-cover"/>
+</div>
+</div>
+<div class="w-full lg:w-1/2 space-y-8 animate-on-scroll">
+<div>
+<h3 class="text-5xl font-serif font-bold mb-2">Perfect</h3>
+<p class="text-xl text-[var(--gold)] uppercase tracking-widest">Ed Shreean</p>
+</div>
+<div class="space-y-4">
+<div class="w-full h-1.5 bg-white/10 rounded-full cursor-pointer relative group" id="progressBar">
+<div class="absolute top-0 left-0 h-full bg-[var(--primary)] rounded-full transition-all" id="progressFill" style="width: 0%"></div>
+<div class="absolute top-1/2 left-0 w-4 h-4 bg-white rounded-full -translate-y-1/2 shadow-lg group-hover:scale-125 transition-transform" id="progressHandle" style="left: 0%"></div>
+</div>
+<div class="flex justify-between text-sm text-gray-500 font-mono">
+<span id="currentTime">0:00</span>
+<span id="duration">0:00</span>
+</div>
+</div>
+<div class="flex items-center justify-center gap-10">
+<button id="prevBtn" class="text-gray-400 hover:text-white transition hover:scale-110"><span class="material-symbols-outlined text-4xl">skip_previous</span></button>
+<button id="playBtn" class="w-20 h-20 rounded-full bg-[var(--primary)] flex items-center justify-center text-white hover:scale-125 transition shadow-[0_0_30px_rgba(242,13,70,0.5)]">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<button id="nextBtn" class="text-gray-400 hover:text-white transition hover:scale-110"><span class="material-symbols-outlined text-4xl">skip_next</span></button>
+</div>
+<div class="pt-6 border-t border-white/10">
+<p class="italic text-2xl text-gray-300 font-serif leading-relaxed">"Bu şarkı çaldığında aklıma hep sen geliyorsun..."</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-32 bg-[#1a0508]">
+<div class="max-w-3xl mx-auto px-4">
+<div class="bg-[#f4e4bc] text-[#4a3b32] p-12 md:p-20 rounded-lg shadow-2xl animate-on-scroll" style="background-image: url(https://www.transparenttextures.com/patterns/cream-paper.png); box-shadow: inset 0 0 100px rgba(0,0,0,0.2), 0 0 40px rgba(0,0,0,0.3);">
+<h2 class="font-serif text-4xl md:text-5xl text-center mb-12 font-bold uppercase tracking-widest border-b border-[#4a3b32]/20 pb-6">Bizim Hikayemiz</h2>
+<div class="font-serif text-xl md:text-2xl space-y-8 leading-loose">
+<p>Sevgilim,</p>
+<p>Bugün seninle olmanın, seni tanımanın ve seni sevmenin ne kadar büyük bir şans olduğunu bir kez daha hatırlatmak istedim. Hayatıma girdiğin o günden beri renkler daha parlak, günler daha anlamlı.</p>
+<p>Bazen kelimeler hissettiklerimi anlatmaya yetmiyor. Sadece bilmeni istiyorum ki, kalbimdeki yerin hiçbir zaman değişmeyecek. Seninle geçirdiğim her an, hafızamda sakladığım en değerli hazine.</p>
+<p>İyi ki varsın, iyi ki benimsin. Birlikte nice güzel anılara, nice yıllara...</p>
+<p class="text-right mt-16 font-bold italic text-2xl">Seni çok seven,<br/><span class="text-[var(--primary)] mt-2 block">Aşkın</span></p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-32 bg-[#1a0508] text-center border-t border-white/5">
+<div class="max-w-6xl mx-auto px-4 animate-on-scroll">
+<div class="w-48 h-48 md:w-64 md:h-64 mx-auto border-8 border-white p-2 shadow-2xl bg-white mb-10">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('22.jpeg');"></div>
+</div>
+<h2 class="font-serif text-4xl md:text-6xl text-[var(--gold)] mb-6" style="background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728); -webkit-background-clip: text; background-clip: text; color: transparent;">Sonsuza Dek</h2>
+<div class="flex items-center justify-center gap-4 text-[var(--primary)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1; animation: heartbeat 1.5s ease-in-out infinite;">favorite</span>
+<span class="text-lg font-bold uppercase tracking-[0.4em]">Love You Always</span>
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1; animation: heartbeat 1.5s ease-in-out infinite;">favorite</span>
+</div>
+</div>
+</section>
+
+<script>
+const audio = document.getElementById('audio');
+const playBtn = document.getElementById('playBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const progressBar = document.getElementById('progressBar');
+const progressFill = document.getElementById('progressFill');
+const progressHandle = document.getElementById('progressHandle');
+const currentTimeEl = document.getElementById('currentTime');
+const durationEl = document.getElementById('duration');
+const musicPopup = document.getElementById('musicPopup');
+
+// Popup fonksiyonları
+function startMusicFromPopup() {
+    audio.play().then(() => {
+        playBtn.querySelector('.material-symbols-outlined').textContent = 'pause';
+        musicPopup.style.display = 'none';
+    }).catch(err => {
+        console.log('Müzik başlatılamadı:', err);
+    });
+}
+
+function closePopup() {
+    musicPopup.style.display = 'none';
+}
+
+// Play/Pause
+playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+        audio.play();
+        playBtn.querySelector('.material-symbols-outlined').textContent = 'pause';
+    } else {
+        audio.pause();
+        playBtn.querySelector('.material-symbols-outlined').textContent = 'play_arrow';
+    }
+});
+
+// İleri/Geri
+prevBtn.addEventListener('click', () => audio.currentTime = Math.max(0, audio.currentTime - 10));
+nextBtn.addEventListener('click', () => audio.currentTime = Math.min(audio.duration, audio.currentTime + 10));
+
+// Progress
+audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = percent + '%';
+        progressHandle.style.left = percent + '%';
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+    }
+});
+
+audio.addEventListener('loadedmetadata', () => {
+    durationEl.textContent = formatTime(audio.duration);
+});
+
+progressBar.addEventListener('click', (e) => {
+    const rect = progressBar.getBoundingClientRect();
+    const percent = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = percent * audio.duration;
+});
+
+function formatTime(seconds) {
+    if (isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return mins + ':' + (secs < 10 ? '0' : '') + secs;
+}
+
+// Scroll animasyonları
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// Zarf otomatik açılma (mobil için)
+const envelopeContainer = document.querySelector('.envelope-container');
+if (envelopeContainer) {
+    const envelopeObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Mobil cihazda otomatik aç
+                if (window.innerWidth <= 768) {
+                    setTimeout(() => {
+                        envelopeContainer.classList.add('mobile-opened');
+                    }, 500);
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    envelopeObserver.observe(envelopeContainer);
+}
+
+// Gün sayacı
+const dayCounter = document.getElementById('dayCounter');
+if (dayCounter) {
+    let current = 0;
+    const target = 2555;
+    const increment = target / 200;
+    function update() {
+        current += increment;
+        if (current < target) {
+            dayCounter.textContent = Math.floor(current);
+            requestAnimationFrame(update);
+        } else {
+            dayCounter.textContent = target;
+        }
+    }
+    const counterObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                update();
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    counterObserver.observe(dayCounter);
+}
+</script>
+</body></html>
